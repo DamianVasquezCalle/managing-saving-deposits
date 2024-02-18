@@ -11,36 +11,23 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 import { UserFormComponent } from '../user-form/user-form.component';
-import { BasicAction, Role } from './users.interfaces';
+import { BasicAction, UserRole } from './users.interfaces';
+import { UserRolePipe } from "../../pipes/user-role.pipe";
 
 import type { UserElement, UserFormElement } from './users.interfaces';
 
 const ELEMENT_DATA: UserElement[] = [
-  { id: uuidv4(), name: 'Hydrogen', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Helium', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Lithium', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Beryllium', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Boron', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Carbon', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Nitrogen', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Oxygen', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Fluorine', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Neon', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Beryllium', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Boron', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Carbon', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Nitrogen', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Oxygen', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Fluorine', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: uuidv4(), name: 'Neon', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Hydrogen', lastname: 'LAstnames', username: '', role: UserRole.Regular },
+  { id: uuidv4(), name: 'Helium', lastname: 'LAstnames', username: '', role: UserRole.Regular },
+  { id: uuidv4(), name: 'Lithium', lastname: 'LAstnames', username: '', role: UserRole.Regular },
 ];
 
 @Component({
   selector: 'app-users',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatTableModule, MatGridListModule, MatIconModule, MatSortModule, MatPaginatorModule],
   templateUrl: './users.component.html',
-  styleUrl: './users.component.css'
+  styleUrl: './users.component.css',
+  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatTableModule, MatGridListModule, MatIconModule, MatSortModule, MatPaginatorModule, UserRolePipe]
 })
 export class UsersComponent implements AfterViewInit {
   dataSource: MatTableDataSource<UserElement>;
@@ -69,7 +56,7 @@ export class UsersComponent implements AfterViewInit {
 
   addData() {
     const newUserDialog = this.dialog.open<UserFormComponent, UserFormElement, UserFormElement>(UserFormComponent, {
-      data: { id: uuidv4(), action: BasicAction.Create, name: '', lastname: '', username: '', role: Role.Regular },
+      data: { id: uuidv4(), action: BasicAction.Create, name: '', lastname: '', username: '', role: UserRole.Regular },
       height: 'auto',
       width: '600px'
     });

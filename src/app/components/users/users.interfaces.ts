@@ -3,7 +3,7 @@ export interface UserElement {
   name: string;
   lastname: string;
   username: string;
-  role: Role;
+  role: UserRole;
 }
 
 export interface UserFormElement extends UserElement {
@@ -16,7 +16,7 @@ export enum BasicAction {
   Delete
 }
 
-export enum Role {
+export enum UserRole {
   Regular,
   Manager,
   Admin
