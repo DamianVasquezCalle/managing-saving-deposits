@@ -1,0 +1,38 @@
+<h2 mat-dialog-title>
+  {{ data.action === actions.Create ? "New User" : "Edit User" }}
+</h2>
+<mat-dialog-content>
+  <mat-form-field class="w-100">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="data.name" (ngModelChange)="validateForm()" />
+  </mat-form-field>
+  <br />
+  <mat-form-field class="w-100">
+    <mat-label>Lastname</mat-label>
+    <input
+      matInput
+      [(ngModel)]="data.lastname"
+      (ngModelChange)="validateForm()"
+    />
+  </mat-form-field>
+  <br />
+  <mat-form-field class="w-100">
+    <mat-label>Username</mat-label>
+    <input
+      matInput
+      [(ngModel)]="data.username"
+      (ngModelChange)="validateForm()"
+    />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="p-3">
+  <button mat-button (click)="onClick()">Cancel</button>
+  <button
+    mat-button
+    color="primary"
+    [disabled]="!validForm"
+    [mat-dialog-close]="data"
+  >
+    Create
+  </button>
+</mat-dialog-actions>
