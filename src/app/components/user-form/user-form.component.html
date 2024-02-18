@@ -17,6 +17,15 @@
   </mat-form-field>
   <br />
   <mat-form-field class="w-100">
+    <mat-label>Select Type</mat-label>
+    <mat-select [(ngModel)]="data.role" (ngModelChange)="validateForm()">
+      <mat-option [value]="roles.Regular">Regular</mat-option>
+      <mat-option [value]="roles.Manager">Manager</mat-option>
+      <mat-option [value]="roles.Admin">Admin</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <br />
+  <mat-form-field class="w-100">
     <mat-label>Username</mat-label>
     <input
       matInput

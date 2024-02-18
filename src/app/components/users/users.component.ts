@@ -16,23 +16,23 @@ import { BasicAction, Role } from './users.interfaces';
 import type { UserElement, UserFormElement } from './users.interfaces';
 
 const ELEMENT_DATA: UserElement[] = [
-  { id: 'abc-123', name: 'Hydrogen', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Helium', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Lithium', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Beryllium', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Boron', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Carbon', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Nitrogen', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Oxygen', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Fluorine', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Neon', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Beryllium', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Boron', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Carbon', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Nitrogen', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Oxygen', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Fluorine', lastname: 'LAstnames', username: '', role: Role.Regular },
-  { id: 'abc-123', name: 'Neon', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Hydrogen', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Helium', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Lithium', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Beryllium', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Boron', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Carbon', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Nitrogen', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Oxygen', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Fluorine', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Neon', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Beryllium', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Boron', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Carbon', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Nitrogen', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Oxygen', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Fluorine', lastname: 'LAstnames', username: '', role: Role.Regular },
+  { id: uuidv4(), name: 'Neon', lastname: 'LAstnames', username: '', role: Role.Regular },
 ];
 
 @Component({
@@ -44,7 +44,7 @@ const ELEMENT_DATA: UserElement[] = [
 })
 export class UsersComponent implements AfterViewInit {
   dataSource: MatTableDataSource<UserElement>;
-  displayedColumns: string[] = ['name', 'lastname', 'username'];
+  displayedColumns: string[] = ['name', 'lastname', 'username', 'role'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -70,7 +70,7 @@ export class UsersComponent implements AfterViewInit {
   addData() {
     const newUserDialog = this.dialog.open<UserFormComponent, UserFormElement, UserFormElement>(UserFormComponent, {
       data: { id: uuidv4(), action: BasicAction.Create, name: '', lastname: '', username: '', role: Role.Regular },
-      height: '400px',
+      height: 'auto',
       width: '600px'
     });
     newUserDialog.afterClosed().subscribe(result => {
