@@ -12,9 +12,11 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDialog } from '@angular/material/dialog';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { BasicAction, UserRole } from './users.interfaces';
-import { UserRolePipe } from "../../pipes/user-role.pipe";
+import { UserRolePipe } from "../../pipes/userRole/user-role.pipe";
 
 import type { UserElement, UserFormElement } from './users.interfaces';
+import { SimpleDialogComponent } from '../common/simple-dialog/simple-dialog.component';
+import { SimpleDialogConfig } from '../common/simple-dialog/simple-dialog.interface';
 
 const ELEMENT_DATA: UserElement[] = [
   { id: uuidv4(), name: 'Hydrogen', lastname: 'LAstnames', username: 'Hydrogen', role: UserRole.Regular },
@@ -85,11 +87,23 @@ export class UsersComponent implements AfterViewInit {
   }
 
   onDeleteUser(id: string) {
-    console.log("onDeleteUser", id)
-    // removeData() {
-    //   this.dataToDisplay = this.dataToDisplay.slice(0, -1);
-    //   this.dataSource.setData(this.dataToDisplay);
-    // }
+    const users = [...this.dataSource.data];
+    const targetUser = users.find(user => user.id === id);
+    if (!targetUser) return;
+
+    const newUserDialog = this.dialog.open<SimpleDialogComponent, SimpleDialogConfig, boolean>(SimpleDialogComponent, {
+      data: {
+        title: 'Confirm User Deletion',
+        content: `Are you sure of delete user '${targetUser.name} ${targetUser.lastname}'?`
+      },
+      height: 'auto',
+      width: '350px'
+    });
+    newUserDialog.afterClosed().subscribe(result => {
+      if (!result) return;
+
+      this.dataSource.data = [...users.filter(x => x.id !== id)];
+    });
   }
 
 }
