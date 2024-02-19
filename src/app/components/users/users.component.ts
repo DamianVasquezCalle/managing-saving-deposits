@@ -17,9 +17,9 @@ import { UserRolePipe } from "../../pipes/user-role.pipe";
 import type { UserElement, UserFormElement } from './users.interfaces';
 
 const ELEMENT_DATA: UserElement[] = [
-  { id: uuidv4(), name: 'Hydrogen', lastname: 'LAstnames', username: '', role: UserRole.Regular },
-  { id: uuidv4(), name: 'Helium', lastname: 'LAstnames', username: '', role: UserRole.Regular },
-  { id: uuidv4(), name: 'Lithium', lastname: 'LAstnames', username: '', role: UserRole.Regular },
+  { id: uuidv4(), name: 'Hydrogen', lastname: 'LAstnames', username: 'Hydrogen', role: UserRole.Regular },
+  { id: uuidv4(), name: 'Helium', lastname: 'LAstnames', username: 'Helium', role: UserRole.Regular },
+  { id: uuidv4(), name: 'Lithium', lastname: 'LAstnames', username: 'Lithium', role: UserRole.Regular },
 ];
 
 @Component({
@@ -31,7 +31,7 @@ const ELEMENT_DATA: UserElement[] = [
 })
 export class UsersComponent implements AfterViewInit {
   dataSource: MatTableDataSource<UserElement>;
-  displayedColumns: string[] = ['name', 'lastname', 'username', 'role'];
+  displayedColumns: string[] = ['name', 'lastname', 'username', 'role', 'actions'];
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -54,7 +54,7 @@ export class UsersComponent implements AfterViewInit {
     }
   }
 
-  addData() {
+  onAddUser() {
     const newUserDialog = this.dialog.open<UserFormComponent, UserFormElement, UserFormElement>(UserFormComponent, {
       data: { id: uuidv4(), action: BasicAction.Create, name: '', lastname: '', username: '', role: UserRole.Regular },
       height: 'auto',
@@ -66,8 +66,30 @@ export class UsersComponent implements AfterViewInit {
     });
   }
 
-  // removeData() {
-  //   this.dataToDisplay = this.dataToDisplay.slice(0, -1);
-  //   this.dataSource.setData(this.dataToDisplay);
-  // }
+  onEditUser(id: string) {
+    const users = this.dataSource.data;
+    const targetUserIndex = users.findIndex(user => user.id === id);
+    if (targetUserIndex < 0) return;
+
+    const newUserDialog = this.dialog.open<UserFormComponent, UserFormElement, UserFormElement>(UserFormComponent, {
+      data: { ...users[targetUserIndex], action: BasicAction.Update },
+      height: 'auto',
+      width: '600px'
+    });
+    newUserDialog.afterClosed().subscribe(result => {
+      if (!result) return;
+      users[targetUserIndex] = result;
+      this.dataSource.data = [...users];
+    });
+
+  }
+
+  onDeleteUser(id: string) {
+    console.log("onDeleteUser", id)
+    // removeData() {
+    //   this.dataToDisplay = this.dataToDisplay.slice(0, -1);
+    //   this.dataSource.setData(this.dataToDisplay);
+    // }
+  }
+
 }

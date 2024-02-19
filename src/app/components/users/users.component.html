@@ -9,7 +9,7 @@
       mat-mini-fab
       color="primary"
       aria-label="New user"
-      (click)="addData()"
+      (click)="onAddUser()"
     >
       <mat-icon>add</mat-icon>
     </button>
@@ -25,12 +25,8 @@
       #input
     />
   </mat-form-field>
-  <div class="mat-elevation-z8">
-    <table
-      mat-table
-      [dataSource]="dataSource"
-      class="mat-elevation-z8 demo-table"
-    >
+  <div class="mat-elevation-z2">
+    <table mat-table [dataSource]="dataSource">
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef>Name</th>
         <td mat-cell *matCellDef="let element">{{ element.name }}</td>
@@ -48,7 +44,32 @@
 
       <ng-container matColumnDef="role">
         <th mat-header-cell *matHeaderCellDef>Role</th>
-        <td mat-cell *matCellDef="let element">{{ element.role | userRole }}</td>
+        <td mat-cell *matCellDef="let element">
+          {{ element.role | userRole }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef width="200px">Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-stroked-button
+            color="primary"
+            aria-label="Edit user"
+            (click)="onEditUser(element.id)"
+          >
+            Edit
+          </button>
+          &nbsp;&nbsp;&nbsp;
+          <button
+            mat-stroked-button
+            color="warn"
+            aria-label="Delete user"
+            (click)="onDeleteUser(element.id)"
+          >
+            Delete
+          </button>
+        </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

@@ -42,6 +42,6 @@
     [disabled]="!validForm"
     [mat-dialog-close]="data"
   >
-    Create
+    {{ data.action === actions.Create ? "Create" : "Update" }}
   </button>
 </mat-dialog-actions>
