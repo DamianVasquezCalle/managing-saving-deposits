@@ -13,10 +13,11 @@ import { MatDialog } from '@angular/material/dialog';
 import { UserFormComponent } from '../user-form/user-form.component';
 import { BasicAction, UserRole } from './users.interfaces';
 import { UserRolePipe } from "../../pipes/userRole/user-role.pipe";
-
-import type { UserElement, UserFormElement } from './users.interfaces';
 import { SimpleDialogComponent } from '../common/simple-dialog/simple-dialog.component';
 import { SimpleDialogConfig } from '../common/simple-dialog/simple-dialog.interface';
+import { NSwagService } from '../../services/generated-services';
+
+import type { UserElement, UserFormElement } from './users.interfaces';
 
 const ELEMENT_DATA: UserElement[] = [
   { id: uuidv4(), name: 'Hydrogen', lastname: 'LAstnames', username: 'Hydrogen', role: UserRole.Regular },
@@ -29,7 +30,17 @@ const ELEMENT_DATA: UserElement[] = [
   standalone: true,
   templateUrl: './users.component.html',
   styleUrl: './users.component.css',
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatTableModule, MatGridListModule, MatIconModule, MatSortModule, MatPaginatorModule, UserRolePipe]
+  imports: [
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTableModule,
+    MatGridListModule,
+    MatIconModule,
+    MatSortModule,
+    MatPaginatorModule,
+    UserRolePipe
+  ]
 })
 export class UsersComponent implements AfterViewInit {
   dataSource: MatTableDataSource<UserElement>;
@@ -38,8 +49,12 @@ export class UsersComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private dialog: MatDialog) {
-    this.dataSource = new MatTableDataSource([...ELEMENT_DATA])
+  constructor(private dialog: MatDialog, private service: NSwagService) {
+    this.dataSource = new MatTableDataSource([...ELEMENT_DATA]);
+    this.service.apiUsersSizePageSort(10, 0, 'ASC').subscribe(response => {
+      console.log("response", response)
+    });
+
   }
 
   ngAfterViewInit(): void {
