@@ -1,5 +1,5 @@
 export interface UserElement {
-  id: string;
+  id: number;
   name: string;
   lastname: string;
   username: string;
@@ -8,6 +8,7 @@ export interface UserElement {
 
 export interface UserFormElement extends UserElement {
   action: BasicAction | undefined;
+  password: string;
 }
 
 export enum BasicAction {

@@ -49,7 +49,6 @@ export class NSwagService extends BaseService {
         let options_ : any = {
             observe: "response",
             responseType: "blob",
-            mode: 'cors',
             headers: new HttpHeaders({
                 "Accept": "text/plain"
             })
@@ -93,7 +92,7 @@ export class NSwagService extends BaseService {
     /**
      * @return Success
      */
-    apiUsersGet(id: number): Observable<void> {
+    apiUsersGet(id: number): Observable<User> {
         let url_ = this.baseUrl + "/api/Users/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -104,6 +103,7 @@ export class NSwagService extends BaseService {
             observe: "response",
             responseType: "blob",
             headers: new HttpHeaders({
+                "Accept": "text/plain"
             })
         };
 
@@ -114,14 +114,14 @@ export class NSwagService extends BaseService {
                 try {
                     return this.processApiUsersGet(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
+                    return _observableThrow(e) as any as Observable<User>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<void>;
+                return _observableThrow(response_) as any as Observable<User>;
         }));
     }
 
-    protected processApiUsersGet(response: HttpResponseBase): Observable<void> {
+    protected processApiUsersGet(response: HttpResponseBase): Observable<User> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -130,7 +130,9 @@ export class NSwagService extends BaseService {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as User;
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -144,7 +146,7 @@ export class NSwagService extends BaseService {
      * @param body (optional)
      * @return Success
      */
-    apiUsersPut(id: number, body: User | undefined): Observable<void> {
+    apiUsersPut(id: number, body: User | undefined): Observable<User> {
         let url_ = this.baseUrl + "/api/Users/{id}";
         if (id === undefined || id === null)
             throw new Error("The parameter 'id' must be defined.");
@@ -159,6 +161,7 @@ export class NSwagService extends BaseService {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
+                "Accept": "text/plain"
             })
         };
 
@@ -169,14 +172,14 @@ export class NSwagService extends BaseService {
                 try {
                     return this.processApiUsersPut(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
+                    return _observableThrow(e) as any as Observable<User>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<void>;
+                return _observableThrow(response_) as any as Observable<User>;
         }));
     }
 
-    protected processApiUsersPut(response: HttpResponseBase): Observable<void> {
+    protected processApiUsersPut(response: HttpResponseBase): Observable<User> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -185,7 +188,9 @@ export class NSwagService extends BaseService {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as User;
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
@@ -249,7 +254,7 @@ export class NSwagService extends BaseService {
      * @param body (optional)
      * @return Success
      */
-    apiUsersPost(body: User | undefined): Observable<void> {
+    apiUsersPost(body: User | undefined): Observable<User> {
         let url_ = this.baseUrl + "/api/Users";
         url_ = url_.replace(/[?&]$/, "");
 
@@ -261,6 +266,7 @@ export class NSwagService extends BaseService {
             responseType: "blob",
             headers: new HttpHeaders({
                 "Content-Type": "application/json",
+                "Accept": "text/plain"
             })
         };
 
@@ -271,14 +277,14 @@ export class NSwagService extends BaseService {
                 try {
                     return this.processApiUsersPost(response_ as any);
                 } catch (e) {
-                    return _observableThrow(e) as any as Observable<void>;
+                    return _observableThrow(e) as any as Observable<User>;
                 }
             } else
-                return _observableThrow(response_) as any as Observable<void>;
+                return _observableThrow(response_) as any as Observable<User>;
         }));
     }
 
-    protected processApiUsersPost(response: HttpResponseBase): Observable<void> {
+    protected processApiUsersPost(response: HttpResponseBase): Observable<User> {
         const status = response.status;
         const responseBlob =
             response instanceof HttpResponse ? response.body :
@@ -287,7 +293,9 @@ export class NSwagService extends BaseService {
         let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
         if (status === 200) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
-            return _observableOf(null as any);
+            let result200: any = null;
+            result200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver) as User;
+            return _observableOf(result200);
             }));
         } else if (status !== 200 && status !== 204) {
             return blobToText(responseBlob).pipe(_observableMergeMap((_responseText: string) => {
